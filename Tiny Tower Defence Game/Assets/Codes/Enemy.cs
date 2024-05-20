@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private int wayPointCount;
+    private Transform[] wayPoints;
+    private int currentIndex = 0;
+
     public float speed;
     public float health;
     public float maxHealth;
@@ -53,7 +57,7 @@ public class Enemy : MonoBehaviour
         anim.runtimeAnimatorController = animCon[data.spriteType];
         speed = data.speed; 
         health = data.health;
-        maxHealth = data.maxHealth;
+        maxHealth = data.health;
     }
 
     void Dead()
