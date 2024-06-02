@@ -11,8 +11,16 @@ public class Spawner : MonoBehaviour
     public float spawnInterval = 2f;
     public int maxSpawnCount = 10;
 
+    private List<Enemy> enemyList;
+
+    public List<Enemy> EnemyList => enemyList;
+
     private int currentSpawnCount = 0;
 
+    private void Awake()
+    {
+        enemyList = new List<Enemy>();
+    }
     void Start()
     {
        InvokeRepeating(nameof(SpawnEnemy), 0f, spawnInterval);
@@ -26,12 +34,20 @@ public class Spawner : MonoBehaviour
             GameObject enemy = Instantiate(enemyPrefab[index], spawnPoint.position, spawnPoint.rotation);
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScript.wayPoints = waypoints;
+
+            enemyScript.Setup(this, waypoints);
+            enemyList.Add(enemyScript);
         }
         else
         {
             CancelInvoke(nameof(SpawnEnemy));
         }
         currentSpawnCount++;
+    }
+    public void DestroyEnemy(Enemy enemy)
+    {
+        enemyList.Remove(enemy);
+        Destroy(enemy.gameObject);
     }
 }
 //    public Transform[] spawnPoint;

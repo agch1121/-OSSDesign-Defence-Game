@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class TowerTemplate : MonoBehaviour
+public class TowerTemplate : ScriptableObject
 {
     public GameObject towerPrefabs; // 타워 생성을 위한 프리펩
     public GameObject followTowerPrefabs; // 임시 타워 프리펩

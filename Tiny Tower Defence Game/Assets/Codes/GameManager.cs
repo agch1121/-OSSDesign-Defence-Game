@@ -25,12 +25,20 @@ public class GameManager : MonoBehaviour
     public PoolManager pool;
     public Result uiResult;
 
+    private int currentGold = 100;
     private void Awake()
     {
         instance = this;
         Application.targetFrameRate = 60; // 기본 프레임을 60으로 지정
     }
 
+    
+
+    public int CurrentGold
+    {
+        set => currentGold = Mathf.Max(0, value);
+        get => currentGold;
+    }
     public void GameStart(int id)
     {
         playerId = id;
