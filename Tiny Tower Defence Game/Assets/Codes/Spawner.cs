@@ -4,107 +4,78 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject[] enemyPrefab;
-    public Transform spawnPoint;
+    [SerializeField]
+    private GameObject enemyHPSliderPrefabs;
+    [SerializeField]
+    private Transform canvasTransform;
     public Transform[] waypoints;
-    public string enemyTag;
-    public float spawnInterval = 2f;
-    public int maxSpawnCount = 10;
+    [SerializeField]
+    private PlayerHP playerHP;
+    [SerializeField]
+    private Gold playerGold;
+    private Wave currentWave;
 
     private List<Enemy> enemyList;
 
     public List<Enemy> EnemyList => enemyList;
 
-    private int currentSpawnCount = 0;
-
     private void Awake()
     {
         enemyList = new List<Enemy>();
     }
-    void Start()
-    {
-       InvokeRepeating(nameof(SpawnEnemy), 0f, spawnInterval);
-    }
 
-    void SpawnEnemy()
+    public void StartWave(Wave wave)
     {
-        if (currentSpawnCount < maxSpawnCount)
+        currentWave = wave;
+        StartCoroutine("SpawnEnemy");
+    }
+    private IEnumerator SpawnEnemy()
+    {
+        int spawnEnemyCount = 0;
+        while (spawnEnemyCount < currentWave.maxEnemyCount)
         {
-            int index = Random.Range(0, enemyPrefab.Length);
-            GameObject enemy = Instantiate(enemyPrefab[index], spawnPoint.position, spawnPoint.rotation);
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            int index = Random.Range(0, currentWave.enemyPrefabs.Length);
+            GameObject clone = Instantiate(currentWave.enemyPrefabs[index]);
+            Enemy enemyScript = clone.GetComponent<Enemy>();
             enemyScript.wayPoints = waypoints;
 
             enemyScript.Setup(this, waypoints);
             enemyList.Add(enemyScript);
-        }
-        else
-        {
-            CancelInvoke(nameof(SpawnEnemy));
-        }
-        currentSpawnCount++;
+
+            SpawnEnemyHPSlider(clone);
+
+            spawnEnemyCount++;
+            yield return new WaitForSeconds(currentWave.spawnTime);
+        }    
     }
-    public void DestroyEnemy(Enemy enemy)
+    public void DestroyEnemy(EnemyDestroyType type, Enemy enemy, int gold)
     {
+        if (type == EnemyDestroyType.Arrive)
+        {
+            // 플레이어의 체력 -1
+            playerHP.TakeDamage(1);
+        }
+        else if(type == EnemyDestroyType.Kill)
+        {
+            playerGold.CurrentGold += gold;
+        }
         enemyList.Remove(enemy);
         Destroy(enemy.gameObject);
     }
+
+    private void SpawnEnemyHPSlider(GameObject enemy)
+    {
+        // 적 체력을 나타내는 Slider UI 생성
+        GameObject sliderClone = Instantiate(enemyHPSliderPrefabs);
+        // Slider UI 오브젝트를 parent("Canvas" 오브젝트)의 자식으로 설정
+        // Tip. UI는 캔버스의 자식오브젝트로 설정되어 있어야 화면에 보인다.
+        sliderClone.transform.SetParent(canvasTransform);
+        // 계층 설정으로 바뀐 크기를 다시 (1,1,1)로 설정
+        sliderClone.transform.localScale = Vector3.one;
+
+        // Slider UI가 쫒아다닐 대상을 본인으로 설정
+        sliderClone.GetComponent<SliderAutoPosition>().Setup(enemy.transform);
+        // Slider UI에 자신(enemy)의 체력 정보를 표시하도록 설정
+        sliderClone.GetComponent<HPViewer>().Setup(enemy.GetComponent<EnemyHP>());
+    }
 }
-//    public Transform[] spawnPoint;
-//    public SpawnData[] spawnData;
-//    public float levelTime;
-//    [SerializeField]
-//    private Transform[] wayPoints; // 현재 스테이지의 이동 경로
-//    int level;
-//    float timer;
-//    void Awake()
-//    {
-//        spawnPoint = GetComponentsInChildren<Transform>();
-//        levelTime = GameManager.instance.maxGameTime / spawnData.Length;
-//    }
-
-//    // Update is called once per frame
-//    void Update()
-//    {
-//        if (!GameManager.instance.isLive)
-//            return;
-//        timer += Time.deltaTime;
-//        //level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / levelTime), spawnData.Length - 1); // 소수점 버리고 정수형으로 변환
-//        // CeilToInt : 수수점 아래를 반올림하고 정수형으로 변환
-//        //if (timer > spawnData[level].spawnTime)
-//        if(timer > 0.2f)
-//        {
-//            timer = 0f;
-//            Spawn();
-//        }
-//    }
-
-//    void Spawn()
-//    {
-//        GameObject enemy = GameManager.instance.pool.Get(Random.Range(0, 4));
-//        // 자식 오브젝트에서만 선택되도록 랜덤 시작은 1부터 시작
-//        enemy.transform.position = spawnPoint[1].position;
-//        enemy.GetComponent<Enemy>().Init(spawnData[level]);
-//        int spawnEnemyCount = 0;
-//        Enemy enemy1 = enemy.GetComponent<Enemy>();
-//        while (spawnEnemyCount < 10)
-//        {
-//            //GameObject clone = Instantiate(enemyPrefabs); // 적 오브젝트 생성
-//            // 웨이브에 등장하는 적의 종류가 여러 종류일 때 임의의 적이 등장하도록 설정하고, 적 오브젝트 생성
-//            // this는 나 자신 (자신의 EnemySpawner 정보)
-//            enemy1.Setup(wayPoints); // wayPoint(이동경로) 정보를 매개변수로 Setup() 호출
-
-//            // 현재 웨이브에서 생성한 적의 숫자+1
-//            spawnEnemyCount++;
-
-//        }
-//    }
-//}
-//[System.Serializable]
-//public class SpawnData
-//{
-//    public float spawnTime;
-//    public int spriteType;
-//    public int health;
-//    public float speed;
-//}

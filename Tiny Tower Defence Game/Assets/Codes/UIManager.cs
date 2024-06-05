@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private Text textPlayerHP;
+    [SerializeField]
+    private Text textGold;
+    [SerializeField]
+    private Text textWave;
+    [SerializeField]
+    private PlayerHP playerHP;
+    [SerializeField]
+    private Gold playerGold;
+    [SerializeField]
+    private WaveSystem waveSystem;
 
-    // Update is called once per frame
-    void Update()
+    
+
+    private void Update()
     {
-        
+        textPlayerHP.text = "HP " + playerHP.CurrentHP;
+        textGold.text = playerGold.CurrentGold + " G";
+        textWave.text = "Wave " + waveSystem.CurrentWave + "/" + waveSystem.MaxWave; 
     }
 }
