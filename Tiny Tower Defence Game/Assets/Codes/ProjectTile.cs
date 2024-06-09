@@ -21,6 +21,13 @@ public class ProjectTile : MonoBehaviour
             // 발사체를 target의 위치로 이동
             Vector3 direction = (target.position - transform.position).normalized;
             movement2D.MoveTo(direction);
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+            Quaternion rotation = Quaternion.Euler(0, 0, angle);
+            transform.rotation = rotation;
+
+            //currentRotation.z = Mathf.LerpAngle(currentRotation.z, angle, Time.deltaTime * 2);
+
+            //transform.eulerAngles = currentRotation;
         }
         else // 여러 이유로 target이 사라지면
         {

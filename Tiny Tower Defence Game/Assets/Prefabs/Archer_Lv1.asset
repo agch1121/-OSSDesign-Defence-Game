@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1557d176a2ade4983693852893044c, type: 3}
+  m_Name: Archer_Lv1
+  m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 6058063890974350908, guid: 47e689e4f06e09343a3e03435aa49674, type: 3}
+  weapon:
+  - sprite: {fileID: 21300000, guid: 0a0b70cfd52e574419e377163923b946, type: 3}
+    damage: 1
+    rate: 1
+    range: 3
+    cost: 50
+    sell: 25
+  - sprite: {fileID: 21300000, guid: d1371205877538447ad2ea473179746d, type: 3}
+    damage: 2
+    rate: 0.8
+    range: 4
+    cost: 100
+    sell: 50
+  - sprite: {fileID: 21300000, guid: 49763f91ff9a68644897226748ef2f76, type: 3}
+    damage: 3
+    rate: 0.5
+    range: 5
+    cost: 150
+    sell: 75

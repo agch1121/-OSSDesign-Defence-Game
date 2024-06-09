@@ -5,18 +5,19 @@ using UnityEngine;
 public class TowerSpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] towerPrefab;
-    [SerializeField]
-    private int towerBuildCost = 50;
+    private TowerTemplate template;
     [SerializeField]
     private Spawner enemySpawner;
     [SerializeField]
     private Gold playerGold;
+    [SerializeField]
+    private SystemTextViewer textViewer;
 
     public void SpawnTower(Transform tileTransform)
     {
-        if (towerBuildCost > playerGold.CurrentGold)
+        if (template.weapon[0].cost > playerGold.CurrentGold)
         {
+            textViewer.PrintText(SystemType.Money);
             return;
         }
         Tile tile = tileTransform.GetComponent<Tile>();
@@ -25,13 +26,15 @@ public class TowerSpawner : MonoBehaviour
         // 2. 현재 타일의 위치에 이미 타워가 건설되어 있으면 타워 건설 x
         if (tile.IsBuildTower == true)
         {
+            textViewer.PrintText(SystemType.Build);
             return;
         }
         // 타워가 건설되어 있음으로 설정
         tile.IsBuildTower = true;
-        playerGold.CurrentGold -= towerBuildCost;
-        GameObject clone = Instantiate(towerPrefab[Random.Range(0,2)], tileTransform.position, Quaternion.identity);
-        clone.GetComponent<TowerWeapon>().Setup(enemySpawner);
+        playerGold.CurrentGold -= template.weapon[0].cost;
+        Vector3 position = tileTransform.position + Vector3.back;
+        GameObject clone = Instantiate(template.towerPrefab, position, Quaternion.identity);
+        clone.GetComponent<TowerWeapon>().Setup(enemySpawner, playerGold, tile);
     }
     
 }

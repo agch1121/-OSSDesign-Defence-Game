@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 9098769956716103904}
   - component: {fileID: 7397790122593610684}
   - component: {fileID: 620642378815235919}
+  - component: {fileID: 3991481809934991373}
   m_Layer: 0
   m_Name: barrack_level_1
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,3 +102,25 @@ MonoBehaviour:
   spawnPoint: {fileID: 0}
   attackRate: 0.5
   attackRange: 2
+  attackDamage: 1
+--- !u!65 &3991481809934991373
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3482898448343566426}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.42, y: 1.54, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
