@@ -97,10 +97,13 @@ public class GameManager : MonoBehaviour
 
     public void GameQuit()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
-
-    void Update()
+        void Update()
     {
         if (!isLive)
             return;

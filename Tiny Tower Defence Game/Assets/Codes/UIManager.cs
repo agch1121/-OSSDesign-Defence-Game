@@ -26,4 +26,5 @@ public class UIManager : MonoBehaviour
         textGold.text = playerGold.CurrentGold + " G";
         textWave.text = "Wave " + waveSystem.CurrentWave + "/" + waveSystem.MaxWave; 
     }
+    
 }
