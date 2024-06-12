@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Networking.UnityWebRequest;
 
 public class Spawner : MonoBehaviour
 {
@@ -14,9 +15,10 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private Gold playerGold;
     private Wave currentWave;
-
+    private int kill = 0;
     private List<Enemy> enemyList;
-
+    public GameObject waveButton;
+    public GameManager manager;
     public List<Enemy> EnemyList => enemyList;
 
     private void Awake()
@@ -26,7 +28,9 @@ public class Spawner : MonoBehaviour
 
     public void StartWave(Wave wave)
     {
+        kill = 0;
         currentWave = wave;
+
         StartCoroutine("SpawnEnemy");
     }
     private IEnumerator SpawnEnemy()
@@ -61,6 +65,17 @@ public class Spawner : MonoBehaviour
         }
         enemyList.Remove(enemy);
         Destroy(enemy.gameObject);
+        Destroy(enemy.GetComponentInChildren<Enemy>());
+        kill++;
+        if (kill >= currentWave.maxEnemyCount)
+        {
+            waveButton.SetActive(true);
+            manager.GameVictory();
+        }
+        else if(playerHP.CurrentHP <= 0)
+        {
+            manager.GameOver();
+        }
     }
 
     private void SpawnEnemyHPSlider(GameObject enemy)
@@ -77,5 +92,6 @@ public class Spawner : MonoBehaviour
         sliderClone.GetComponent<SliderAutoPosition>().Setup(enemy.transform);
         // Slider UI에 자신(enemy)의 체력 정보를 표시하도록 설정
         sliderClone.GetComponent<HPViewer>().Setup(enemy.GetComponent<EnemyHP>());
+        
     }
 }

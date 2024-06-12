@@ -13,9 +13,7 @@ public class GameManager : MonoBehaviour
 
     // 몬스터 처치시 정보 및 보상
     [Header("# Player Info")]
-    public int playerId;
     public float health;
-    public float maxHealth = 100;
     public int level;
     public int kill;
     public int gold;
@@ -24,12 +22,13 @@ public class GameManager : MonoBehaviour
     public bool isLive;
     public PoolManager pool;
     public Result uiResult;
-
+    WaitForSecondsRealtime wait;
     private int currentGold = 100;
     private void Awake()
     {
         instance = this;
         Application.targetFrameRate = 60; // 기본 프레임을 60으로 지정
+        wait = new WaitForSecondsRealtime(3);
     }
 
     
@@ -41,8 +40,6 @@ public class GameManager : MonoBehaviour
     }
     public void GameStart(int id)
     {
-        playerId = id;
-        health = maxHealth;
 
         //player.gameObject.SetActive(true);
         //uiLevelUp.Select(playerId % 2);
@@ -54,11 +51,15 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        //StartCoroutine(GameOverRoutine());
+        StartCoroutine(GameOverRoutine());
     }
 
-    //IEnumerator GameOverRoutine()
-    //{
+    IEnumerator GameOverRoutine()
+    {
+        uiResult.gameObject.SetActive(true);
+        uiResult.Lose();
+        yield return 1000;
+    }
     //    isLive = false;
 
     //    yield return new WaitForSeconds(0.5f);
@@ -71,13 +72,20 @@ public class GameManager : MonoBehaviour
     //    AudioManager.instance.PlaySfx(AudioManager.Sfx.Lose);
     //}
 
-    //public void GameVictory()
-    //{
-    //    StartCoroutine(GameVictoryRoutine());
-    //}
+    public void GameVictory()
+    {
+        StartCoroutine(GameVictoryRoutine());
+    }
 
-    //IEnumerator GameVictoryRoutine()
-    //{
+    IEnumerator GameVictoryRoutine()
+    {
+        uiResult.gameObject.SetActive(true);
+        uiResult.Win();
+        yield return wait;
+        uiResult.WinClose();
+        uiResult.gameObject.SetActive(false);
+
+    }
     //    isLive = false;
     //    enemyCleaner.SetActive(true);
 
