@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Button ItemButton;
+    public Image itemImage; // 스프라이트 이미지의 RectTransform
+    public PlayerHP playerHP;
     void Start()
     {
-        
+        itemImage.gameObject.SetActive(false); // 시작 시 비활성화
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    public void UseItem()
+    { 
+         Invoke("IncreaseHP", 3);
         
+    }
+    public void IncreaseHP()
+    {
+        playerHP.setHP(10);
+        itemImage.gameObject.SetActive(false);
+        ItemButton.image.color = new Color32(91, 91, 91, 255);
+        ItemButton.interactable = false;
     }
 }

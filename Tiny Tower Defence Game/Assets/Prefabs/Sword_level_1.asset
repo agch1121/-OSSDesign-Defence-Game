@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f489bf01cf1fbe145b2a1a978d58ca62, type: 3}
+  m_Name: Sword_level_1
+  m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 1540145359535974244, guid: 5695783f9f84bcb4396738b3ec83f95f, type: 3}
+  weapon:
+  - sprite: {fileID: -3154150011874791226, guid: 4d701fb8bab94204e92af20e3e7b6a8a, type: 3}
+    damage: 5
+    rate: 2
+    range: 10
+    cost: 100
+  - sprite: {fileID: -8364913047766280116, guid: 4d701fb8bab94204e92af20e3e7b6a8a, type: 3}
+    damage: 10
+    rate: 1
+    range: 10
+    cost: 300

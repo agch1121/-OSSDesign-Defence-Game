@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement2D : MonoBehaviour
 {
     [SerializeField]
-    private float moveSpeed = 0.0f;
+    private float moveSpeed = 1f;
     [SerializeField]
     private Vector3 moveDirection = Vector3.zero;
     private float baseMoveSpeed;
@@ -17,11 +17,11 @@ public class Movement2D : MonoBehaviour
         set => moveSpeed = Mathf.Max(0, value); // 이동속도가 음수가 되지 않도록 설정
         get => moveSpeed;
     }
-
-    private void Awake()
+    private void Start()
     {
         baseMoveSpeed = MoveSpeed;
     }
+
     void Update()
     {
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
@@ -31,7 +31,10 @@ public class Movement2D : MonoBehaviour
     {
         moveDirection = direction;
     }
-
+    public void Stop()
+    {
+        moveSpeed = 0f;
+    }
     public void ResetMoveSpeed()
     {
         moveSpeed = baseMoveSpeed;

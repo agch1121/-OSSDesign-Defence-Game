@@ -67,15 +67,15 @@ public class Spawner : MonoBehaviour
         Destroy(enemy.gameObject);
         Destroy(enemy.GetComponentInChildren<Enemy>());
         kill++;
-        if (kill >= currentWave.maxEnemyCount)
+        if (kill >= currentWave.maxEnemyCount && playerHP.CurrentHP > 0)
         {
             waveButton.SetActive(true);
             manager.GameVictory();
         }
-        else if(playerHP.CurrentHP <= 0)
-        {
-            manager.GameOver();
-        }
+        //else if(playerHP.CurrentHP <= 0)
+        //{
+        //    manager.GameOver();
+        //}
     }
 
     private void SpawnEnemyHPSlider(GameObject enemy)

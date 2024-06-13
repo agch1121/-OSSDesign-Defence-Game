@@ -7,23 +7,14 @@ using static UnityEngine.Networking.UnityWebRequest;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    [Header("# Game Control")]
-    public float gameTime;
-    public float maxGameTime = 2 * 10f;
 
-    // 몬스터 처치시 정보 및 보상
-    [Header("# Player Info")]
-    public float health;
-    public int level;
-    public int kill;
-    public int gold;
 
     [Header("# Game Object")]
     public bool isLive;
-    public PoolManager pool;
     public Result uiResult;
     WaitForSecondsRealtime wait;
-    private int currentGold = 100;
+    public WaveSystem ws;
+    public PlayerHP playerHP;
     private void Awake()
     {
         instance = this;
@@ -32,22 +23,6 @@ public class GameManager : MonoBehaviour
     }
 
     
-
-    public int CurrentGold
-    {
-        set => currentGold = Mathf.Max(0, value);
-        get => currentGold;
-    }
-    public void GameStart(int id)
-    {
-
-        //player.gameObject.SetActive(true);
-        //uiLevelUp.Select(playerId % 2);
-        Resume();
-
-        //AudioManager.instance.PlayBgm(true);
-        //AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
-    }
 
     public void GameOver()
     {
@@ -60,18 +35,7 @@ public class GameManager : MonoBehaviour
         uiResult.Lose();
         yield return 1000;
     }
-    //    isLive = false;
-
-    //    yield return new WaitForSeconds(0.5f);
-
-    //    uiResult.gameObject.SetActive(true);
-    //    uiResult.Lose();
-    //    Stop();
-
-    //    AudioManager.instance.PlayBgm(false);
-    //    AudioManager.instance.PlaySfx(AudioManager.Sfx.Lose);
-    //}
-
+  
     public void GameVictory()
     {
         StartCoroutine(GameVictoryRoutine());
@@ -86,21 +50,15 @@ public class GameManager : MonoBehaviour
         uiResult.gameObject.SetActive(false);
 
     }
-    //    isLive = false;
-    //    enemyCleaner.SetActive(true);
-
-    //    yield return new WaitForSeconds(0.5f);
-
-    //    uiResult.gameObject.SetActive(true);
-    //    uiResult.Win();
-    //    Stop();
-
-    //    AudioManager.instance.PlayBgm(false);
-    //    AudioManager.instance.PlaySfx(AudioManager.Sfx.Win);
-    //}
+    public void GameEnd()
+    {
+        uiResult.gameObject.SetActive(true);
+        uiResult.Finish();
+    }
     public void GameRetry()
     {
-        SceneManager.LoadScene(0);
+        ws.setWave(1);
+        playerHP.setHP(10);
     }
 
     public void GameQuit()
@@ -111,27 +69,7 @@ public class GameManager : MonoBehaviour
         Application.Quit();
 #endif
     }
-        void Update()
-    {
-        if (!isLive)
-            return;
 
-        gameTime += Time.deltaTime;
-
-        if (gameTime > maxGameTime)
-        {
-            gameTime = maxGameTime;
-            //GameVictory();
-        }
-    }
-
-    public void getExp()
-    {
-        if (!isLive)
-            return;
-
-        gold++;
-    }
 
     public void Stop()
     {

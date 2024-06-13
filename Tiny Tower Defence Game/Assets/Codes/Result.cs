@@ -20,4 +20,12 @@ public class Result : MonoBehaviour
     {
         titles[1].SetActive(false);
     }
+    public void LoseClose()
+    {
+        titles[0].SetActive(false);
+    }
+    public void Finish()
+    {
+        titles[2].SetActive(true);
+    }
 }

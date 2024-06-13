@@ -16,7 +16,11 @@ public class PlayerHP : MonoBehaviour
     {
         currentHP = maxHP;
     }
-
+    public void setHP(float hp)
+    {
+        maxHP += hp;
+        currentHP += hp;
+    }
     public void TakeDamage(float damage)
     {
         // 현재 체력을 damage만큼 감소
@@ -26,7 +30,7 @@ public class PlayerHP : MonoBehaviour
         StartCoroutine("HitAlphaAnimation");
         if (currentHP <= 0)
         {
-
+            GameManager.instance.GameOver();
         }
     }
     private IEnumerator HitAlphaAnimation()

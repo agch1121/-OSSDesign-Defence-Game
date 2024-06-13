@@ -12,6 +12,10 @@ public class WaveSystem : MonoBehaviour
 
     public int CurrentWave => currentWaveIndex + 1;
     public int MaxWave => waves.Length;
+    public void setWave(int waveIndex)
+    {
+        currentWaveIndex -= waveIndex;
+    }
     public void StartWave()
     {
         // 현재 맵에 적이 없고, Wave가 남아있으면
