@@ -21,6 +21,10 @@ public class PlayerHP : MonoBehaviour
         maxHP += hp;
         currentHP += hp;
     }
+    public void loadHP(float hp)
+    {
+        currentHP = hp;
+    }
     public void TakeDamage(float damage)
     {
         // 현재 체력을 damage만큼 감소

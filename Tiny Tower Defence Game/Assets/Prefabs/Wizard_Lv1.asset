@@ -25,7 +25,7 @@ MonoBehaviour:
     damage: 3
     rate: 1
     range: 5
-    cost: 150
+    cost: 200
     sell: 75
   - sprite: {fileID: 21300000, guid: f6165d8f043547b4f89e7568f50dd048, type: 3}
     damage: 5

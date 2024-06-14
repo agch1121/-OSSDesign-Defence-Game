@@ -20,7 +20,12 @@ public class EnemyHP : MonoBehaviour
         enemy = GetComponent<Enemy>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-
+    public void setHP(float value)
+    {
+        Debug.Log("Setting HP: " + value);
+        currentHP = value;
+        isDie = false;
+    }
     public void TakeDamage(float damage)
     {
         // Tip. 적의 체력이 damage 만큼 감소해서 죽을 상황일 때 여러 타워의 공격을 동시에 받으면
@@ -38,7 +43,6 @@ public class EnemyHP : MonoBehaviour
         if (currentHP <= 0)
         {
             isDie = true;
-            //enemy.OnDie(EnemyDestroyType.Kill);
             enemy.OnDie(EnemyDestroyType.Kill);
         }
     }

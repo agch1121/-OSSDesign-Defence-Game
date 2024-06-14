@@ -30,7 +30,6 @@ public class Spawner : MonoBehaviour
     {
         kill = 0;
         currentWave = wave;
-
         StartCoroutine("SpawnEnemy");
     }
     private IEnumerator SpawnEnemy()
@@ -45,7 +44,6 @@ public class Spawner : MonoBehaviour
 
             enemyScript.Setup(this, waypoints);
             enemyList.Add(enemyScript);
-
             SpawnEnemyHPSlider(clone);
 
             spawnEnemyCount++;
@@ -72,12 +70,8 @@ public class Spawner : MonoBehaviour
             waveButton.SetActive(true);
             manager.GameVictory();
         }
-        //else if(playerHP.CurrentHP <= 0)
-        //{
-        //    manager.GameOver();
-        //}
     }
-
+    
     private void SpawnEnemyHPSlider(GameObject enemy)
     {
         // 적 체력을 나타내는 Slider UI 생성

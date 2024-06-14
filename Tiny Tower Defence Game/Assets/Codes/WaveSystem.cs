@@ -16,6 +16,10 @@ public class WaveSystem : MonoBehaviour
     {
         currentWaveIndex -= waveIndex;
     }
+    public void loadWave(int waveIndex)
+    {
+        currentWaveIndex = waveIndex;
+    }
     public void StartWave()
     {
         // 현재 맵에 적이 없고, Wave가 남아있으면

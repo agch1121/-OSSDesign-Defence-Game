@@ -34,7 +34,6 @@ public class AchieveManager : MonoBehaviour
         {
             PlayerPrefs.SetInt(achieve.ToString(), 0);
         }
-
     }
 
     void Start()
@@ -64,47 +63,46 @@ public class AchieveManager : MonoBehaviour
     void CheckAchieve(Achieve achieve)
     {
         bool isAchieve = false;
-        
 
         if (ws == null)
         {
             Debug.LogError("WaveSystem 컴포넌트를 찾을 수 없습니다.");
             return;
         }
+
         switch (achieve)
         {
             case Achieve.Unlock1:
                 isAchieve = ws.CurrentWave > 1;
                 break;
             case Achieve.Unlock2:
-                //isAchieve = isChecked == true;
+                isAchieve = ws.CurrentWave > 4;
                 break;
             case Achieve.Unlock3:
-                isAchieve = ws.CurrentWave == ws.MaxWave;
+                isAchieve = ws.CurrentWave > 7;
                 break;
             case Achieve.Unlock4:
-                //isAchieve = 
+                isAchieve = ws.CurrentWave == ws.MaxWave;
                 break;
-
         }
 
         if (isAchieve && PlayerPrefs.GetInt(achieve.ToString()) == 0)
         {
-            PlayerPrefs.SetInt(achieve.ToString(), 1); // 업적 달성했음을 저장
+            PlayerPrefs.SetInt(achieve.ToString(), 1);
 
-            // 알림창의 자식 오브젝트를 순회하면서 순번이 맞으면 활성화
             for (int index = 0; index < uiNotice.transform.childCount; index++)
             {
                 bool isActive = index == (int)achieve;
                 uiNotice.transform.GetChild(index).gameObject.SetActive(isActive);
             }
             StartCoroutine(NoticeRoutine());
+            UnlockCharacter();
         }
     }
+
     IEnumerator NoticeRoutine()
     {
         uiNotice.SetActive(true);
-        //AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
         yield return wait;
         uiNotice.SetActive(false);
     }

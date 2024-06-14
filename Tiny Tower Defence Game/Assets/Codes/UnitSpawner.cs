@@ -1,8 +1,7 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
+
 
 public class UnitSpawner : MonoBehaviour
 {
@@ -20,6 +19,7 @@ public class UnitSpawner : MonoBehaviour
     private SystemTextViewer textViewer;
     private int unitType;
     private int level;
+    public Tile barrack;
     public List<Unit> UnitList => unitList;
     public int Level => level + 1;
     private void Awake()
@@ -29,7 +29,12 @@ public class UnitSpawner : MonoBehaviour
     public void ReadyToSpawnUnit(int type)
     {
         unitType = type;
-        if (template[unitType].weapon[0].cost > playerGold.CurrentGold)
+        if (!barrack.IsBuildTower)
+        {
+            textViewer.PrintText(SystemType.Barrack);
+            return;
+        }
+        else if (template[unitType].weapon[0].cost > playerGold.CurrentGold)
         {
             textViewer.PrintText(SystemType.Money);
             return;
@@ -68,7 +73,6 @@ public class UnitSpawner : MonoBehaviour
         // 적 체력을 나타내는 Slider UI 생성
         GameObject sliderClone = Instantiate(unitHPSliderPrefabs);
         // Slider UI 오브젝트를 parent("Canvas" 오브젝트)의 자식으로 설정
-        // Tip. UI는 캔버스의 자식오브젝트로 설정되어 있어야 화면에 보인다.
         sliderClone.transform.SetParent(canvasTransform);
         // 계층 설정으로 바뀐 크기를 다시 (1,1,1)로 설정
         sliderClone.transform.localScale = Vector3.one;

@@ -24,7 +24,11 @@ public class TowerWeapon : MonoBehaviour
     public int Damage => template.weapon[level].damage;
     public float Rate => template.weapon[level].rate;
     public float Range => template.weapon[level].range;
-    public int Level => level + 1;
+    public int Level
+    {
+        set => level = Mathf.Max(0, value);
+        get => level + 1;
+    }
     public int MaxLevel => template.weapon.Length;
     public void Setup(Spawner enemySpawner, Gold playerGold, Tile ownerTile)
     {
@@ -35,7 +39,12 @@ public class TowerWeapon : MonoBehaviour
 
         ChangeState(WeaponState.SearchTarget);
     }
-
+    public void Setup(Spawner enemySpawner, Gold playerGold)
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        this.enemySpawner = enemySpawner;
+        this.playerGold = playerGold;
+    }
     public void ChangeState(WeaponState newState)
     {
         // 이전에 재생중이던 상태 종료

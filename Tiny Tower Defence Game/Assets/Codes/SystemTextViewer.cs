@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum SystemType { Money = 0, Build }
+public enum SystemType { Money = 0, Build = 1, Barrack }
 public class SystemTextViewer : MonoBehaviour
 {
     private Text textSystem;
@@ -25,6 +25,9 @@ public class SystemTextViewer : MonoBehaviour
                 break;
             case SystemType.Build:
                 textSystem.text = "System : Invalid build tower...";
+                break;
+            case SystemType.Barrack:
+                textSystem.text = "System : Must build Barrack...";
                 break;
         }
 

@@ -17,6 +17,15 @@ public class TowerSpawner : MonoBehaviour
     private GameObject followTowerClone = null;
     private int towerType;
 
+    public List<TowerWeapon> GetAllTowers()
+    {
+        List<TowerWeapon> towers = new List<TowerWeapon>();
+        foreach (TowerWeapon tower in FindObjectsOfType<TowerWeapon>())
+        {
+            towers.Add(tower);
+        }
+        return towers;
+    }
     public void ReadyToSpawnTower(int type)
     {
         towerType = type;
@@ -58,6 +67,11 @@ public class TowerSpawner : MonoBehaviour
 
         Destroy(followTowerClone);
         StopCoroutine("OnTowerCancelSystem");
+    }
+    public void SpawnTowerAt(Vector3 position)
+    {
+        GameObject clone = Instantiate(template[towerType].towerPrefab, position, Quaternion.identity);
+        clone.GetComponent<TowerWeapon>().Setup(enemySpawner, playerGold);
     }
     private IEnumerator OnTowerCancelSystem()
     {

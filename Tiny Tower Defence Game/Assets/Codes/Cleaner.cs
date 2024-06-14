@@ -4,12 +4,7 @@ using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public class Cleaner : MonoBehaviour
-{
-    Rigidbody2D rigid;
-    private void Awake()
-    {
-        rigid = GetComponent<Rigidbody2D>();
-    }
+{ 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Unit"))

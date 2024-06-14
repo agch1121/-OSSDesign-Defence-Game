@@ -18,9 +18,9 @@ MonoBehaviour:
     damage: 10
     rate: 2
     range: 10
-    cost: 200
+    cost: 300
   - sprite: {fileID: 1145669499519311739, guid: 4d701fb8bab94204e92af20e3e7b6a8a, type: 3}
     damage: 15
     rate: 1
     range: 10
-    cost: 400
+    cost: 500

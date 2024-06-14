@@ -15,12 +15,12 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int gold = 10;
 
-    bool isLive;
     bool isStopped; // 적의 이동이 멈췄는지 여부
 
     public void Setup(Spawner enemySpawner, Transform[] wayPoints)
     {
         movement2D = GetComponent<Movement2D>();
+
         this.enemySpawner = enemySpawner;
 
         // 적 이동 경로 WayPoints 경로 설정
